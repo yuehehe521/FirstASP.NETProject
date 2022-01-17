@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TodoApi.Models;
+using Microsoft.AspNetCore.Cors;
 
 namespace TodoApi.Controllers
 {
@@ -22,6 +23,7 @@ namespace TodoApi.Controllers
         }
 
         // GET: api/TodoItems
+        [EnableCors("AnotherPolicy")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TodoItem>>> GetTodoItems()
         {
@@ -29,6 +31,7 @@ namespace TodoApi.Controllers
         }
 
         // GET: api/TodoItems/5
+        [EnableCors("Policy1")]
         [HttpGet("{id}")]
         public async Task<ActionResult<TodoItem>> GetTodoItem(long id)
         {
