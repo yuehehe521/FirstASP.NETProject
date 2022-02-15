@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 //AddCors
 
+
 // builder.Services.AddCors(options =>
 // {
 //     options.AddPolicy(name: MyAllowSpecificOrigins,
@@ -26,7 +27,20 @@ builder.Services.AddDbContext<TodoContext>(opt =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//1、HealthChecks
+builder.Services.AddHealthChecks();
 
+// CORS
+const string myAllowSpecificOrigins = "_myAllowSpecificOrigins";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: myAllowSpecificOrigins,
+        builder =>
+        {
+            builder.WithOrigins("http://example.com",
+                "http://www.contoso.com");
+        });
+    });
 
 var app = builder.Build();
 
@@ -43,8 +57,14 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+// 2、HealthChecks
+app.MapHealthChecks("/healthz");
 
+// Cors
+app.UseCors(myAllowSpecificOrigins);
 app.Run();
+
+
 
 
 // app.UseStaticFiles();
