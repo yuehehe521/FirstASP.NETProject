@@ -1,8 +1,8 @@
 
 using Xunit;
-using Todo.Api;
-using Todo.Api.Models;
-using Todo.Api.Controllers;
+using TodoApi;
+using TodoApi.Models;
+using TodoApi.Controllers;
 
 namespace Todo.UnitTest.Api;
 
